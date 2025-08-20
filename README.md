@@ -45,20 +45,6 @@ To get started with the quickstarts, you will need to have the following:
 
 ---
 
-## Available Quickstarts
-
-### Task Guardrails
-
-A quickstart that demonstrates how to implement custom validation logic for agent tasks, automatic retry mechanisms when outputs don't meet criteria, and integration with external tools (SerperDevTool).
-
-> [Go to Task Guardrails Quickstart](Task%20Guardrails/task_guardrails_101.ipynb)
-
----
-
-*More quickstarts coming soon! 🚧*
-
----
-
 ### Running the Examples
 
 Each quickstart is self-contained and can be run independently:
