@@ -1,0 +1,25 @@
+#!/bin/sh
+set -e
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+
+NOTEBOOKS=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.ipynb$' || true)
+
+if [ -z "$NOTEBOOKS" ]; then
+    exit 0
+fi
+
+echo "Sanitizing notebooks..."
+python3 scripts/clean_notebooks.py $NOTEBOOKS >/dev/null 2>&1 || true
+
+for nb in $NOTEBOOKS; do
+    if ! git diff --quiet -- "$nb"; then
+        git add "$nb"
+        echo "Cleaned and staged: $nb"
+    fi
+done
+
+exit 0
+
+
