@@ -1,3 +1,19 @@
+"""Sanitize Jupyter notebooks by removing metadata.widgets entries.
+
+This script fixes a common issue with notebooks exported from tools like
+Google Colab where notebook-level or cell-level `metadata.widgets` causes
+GitHub and some nbconvert versions to fail rendering with errors such as:
+"the 'state' key is missing from 'metadata.widgets'".
+
+Usage:
+  python3 scripts/clean_notebooks.py <notebook_or_directory> [...]
+
+Behavior:
+  - Recursively finds *.ipynb files for any directory arguments.
+  - Removes `metadata.widgets` at both the notebook and cell level.
+  - Writes changes back in-place.
+  - Safe to run repeatedly (idempotent).
+"""
 import argparse
 import json
 import sys
