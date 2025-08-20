@@ -4,10 +4,6 @@ on:
   pull_request:
     paths:
       - '**/*.ipynb'
-  push:
-    branches: [ main ]
-    paths:
-      - '**/*.ipynb'
 
 jobs:
   sanitize:
