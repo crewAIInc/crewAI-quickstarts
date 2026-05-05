@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ThreeMoonsLab/agents-shipgate/main/docs/manifest-v0.1.json
+
+version: "0.1"
+
+project:
+  name: crewai-guardrails-quickstart
+
+agent:
+  name: guardrails-research-crew
+  declared_purpose:
+    - Research CrewAI topics through read-only web search and demonstrate task guardrail validation.
+
+environment:
+  target: local
+
+tool_sources:
+  - id: guardrails_tool_inventory
+    type: mcp
+    path: tool-inventory.json
+
+permissions:
+  scopes:
+    - serper:search:read
+  credential_mode: api_key
+  notes: "Notebook quickstart uses SerperDevTool for read-only web search."

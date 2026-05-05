@@ -1,0 +1,27 @@
+{
+  "tools": [
+    {
+      "name": "Search the internet with Serper",
+      "description": "Search public web results for a user-provided research query through Serper.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "search_query": {
+            "type": "string",
+            "description": "The web search query to run."
+          }
+        },
+        "required": ["search_query"],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "idempotentHint": true
+      },
+      "auth": {
+        "scopes": ["serper:search:read"]
+      },
+      "owner": "crewai-quickstarts"
+    }
+  ]
+}
