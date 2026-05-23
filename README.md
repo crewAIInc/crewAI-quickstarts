@@ -54,6 +54,10 @@ Each quickstart is self-contained and can be run independently:
 3. Follow the instructions in the example
 4. Experiment and modify the code to learn!
 
+Featured guardrails quickstart:
+
+- [Bilig WorkPaper Formula Readback](Guardrails/bilig_workpaper_formula_readback.ipynb) - verify spreadsheet formula outputs through a CrewAI tool without Excel or browser automation.
+
 ---
 
 ## Support
