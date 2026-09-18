@@ -40,7 +40,7 @@ To get started with the quickstarts, you will need to have the following:
 
 - Python 3.8 or higher
 - Jupyter Notebook
-- An API key from a provider of your choice (e.g., OpenAI, Anthropic, Cohere)
+- An API key from a provider of your choice (e.g., OpenAI, Anthropic, Cohere) or a local Ollama runtime
 - Other API keys for external tools (e.g., SerperDev)
 
 ---
