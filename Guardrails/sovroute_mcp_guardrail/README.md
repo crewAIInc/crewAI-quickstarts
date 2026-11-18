@@ -39,9 +39,8 @@ python main.py --verify-mcp
 ```
 
 ### 2. Run Full CrewAI Security Analyst Agent
-Set `OPENAI_API_KEY` (either in `.env` or exported in your shell), then run:
+Set `OPENAI_API_KEY` in your shell or `.env`, then run:
 ```bash
-export OPENAI_API_KEY=sk-your-openai-key
 python main.py --txid 2fbddb2c398026ca1d43b08570e7dc64acdb091702585f9f9b605963185b9c9d
 ```
 
@@ -74,6 +73,9 @@ Tested with `crewai 1.15.41` + `MCPServerAdapter` (`streamable-http`) against `h
 HOLD: Due to the high risk associated with the BIP-125 RBF status, it is advised to delay acceptance or broadcasting of this transaction until it receives confirmation.
 ```
 
-## Public Demo vs. Production
-* **Public Demo Mode:** `https://node.sovroute.com/mcp` allows rate-limited read-only & zero-broadcast inspection (**120 req/min per IP**) with zero wallet setup.
-* **Production / High-Throughput:** Configure `SOVROUTE_MCP_API_KEY` or use the L402 / x402 REST endpoints documented at `https://node.sovroute.com/openapi.json`.
+## Evaluation Quota & Pay-Per-Call Pricing
+No account, subscription, or API key exists on SovRoute — everything settles **purely per request**:
+* **Evaluation Sandbox:** `https://node.sovroute.com/mcp` allows **15 free `tools/call` executions per 24h per IP** (handshakes & `tools/list` are unlimited) so CrewAI developers can test with zero wallet setup.
+* **Production Pay-Per-Call (No Subscriptions):** Once the 15-call evaluation quota is reached, `/mcp` returns an **HTTP `402 Payment Required`** challenge (or use `@aipp/sovereign-node-mcp` stdio client / REST endpoints at `https://node.sovroute.com/openapi.json`):
+  * **Lightning Network (L402):** `1–5 sats` per call (`Authorization: L402 <macaroon>:<preimage>`)
+  * **Base L2 USDC (x402 v2):** `$0.001–$0.005` per call (`Payment-Signature: <base64_eip3009_payload>`)

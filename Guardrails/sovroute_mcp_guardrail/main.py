@@ -24,7 +24,17 @@ import httpx
 load_dotenv()
 
 SOVROUTE_MCP_URL = os.getenv("SOVROUTE_MCP_URL", "https://node.sovroute.com/mcp")
-SOVROUTE_MCP_API_KEY = os.getenv("SOVROUTE_MCP_API_KEY", "").strip()
+SOVROUTE_PAYMENT_SIGNATURE = os.getenv("SOVROUTE_PAYMENT_SIGNATURE", "").strip()
+SOVROUTE_L402_TOKEN = os.getenv("SOVROUTE_L402_TOKEN", "").strip()
+
+
+def _payment_headers() -> dict[str, str]:
+    headers: dict[str, str] = {}
+    if SOVROUTE_PAYMENT_SIGNATURE:
+        headers["Payment-Signature"] = SOVROUTE_PAYMENT_SIGNATURE
+    if SOVROUTE_L402_TOKEN:
+        headers["Authorization"] = f"L402 {SOVROUTE_L402_TOKEN}"
+    return headers
 
 
 def _mcp_headers() -> dict[str, str]:
@@ -32,8 +42,7 @@ def _mcp_headers() -> dict[str, str]:
         "Content-Type": "application/json",
         "Accept": "application/json, text/event-stream",
     }
-    if SOVROUTE_MCP_API_KEY:
-        headers["Authorization"] = f"Bearer {SOVROUTE_MCP_API_KEY}"
+    headers.update(_payment_headers())
     return headers
 
 
@@ -124,8 +133,9 @@ def run_crewai_audit(txid: str | None, raw_tx_hex: str | None) -> None:
         "url": SOVROUTE_MCP_URL,
         "transport": "streamable-http",
     }
-    if SOVROUTE_MCP_API_KEY:
-        server_params["headers"] = {"Authorization": f"Bearer {SOVROUTE_MCP_API_KEY}"}
+    pay_headers = _payment_headers()
+    if pay_headers:
+        server_params["headers"] = pay_headers
 
     with MCPServerAdapter(server_params) as mcp_tools:
         security_analyst = Agent(
